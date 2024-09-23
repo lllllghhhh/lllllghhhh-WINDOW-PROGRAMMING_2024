@@ -5,11 +5,11 @@
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{C8017750-6D2B-4315-A16F-7DC353231C32}</ProjectGuid>
+        <ProjectGuid>{E8B61BD9-6661-4156-8783-13EB6312A135}</ProjectGuid>
         <OutputType>Exe</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>Practice1_1</RootNamespace>
-        <AssemblyName>Practice1_1</AssemblyName>
+        <RootNamespace>Practice1_2</RootNamespace>
+        <AssemblyName>Practice1_2</AssemblyName>
         <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
