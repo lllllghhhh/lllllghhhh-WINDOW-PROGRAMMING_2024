@@ -6,14 +6,15 @@ namespace Practice1_2
   
   struct account
   {
-    private int balance;
+    static int balance = 10000 ;
     private int points;
+    
     account(int bal, int poi)
     {
       balance = bal;
       points = poi;
     }
-    static private Dictionary<int, account> AccountDict = new Dictionary<int, account>
+    static Dictionary<int, account> AccountDict = new Dictionary<int, account>
     {
       {10000, new account(10000,0) },
       {11000, new account(10000,0) },
@@ -27,18 +28,18 @@ namespace Practice1_2
       {19000, new account(10000,0) },
     };
 
-    static private List<(int, int)> historyList = new List<(int, int)>
+    static List<(int, int)> historyList = new List<(int, int)>
     {
       
     };
-
+    
     public void add_account(int n)
     {
-      AccountDict.Add(n, new account(0,0));
+      AccountDict.Add(n, new account(10000,0));
     }
-    public void print_balance()
+    public void print_balance(int acc)
     {
-      Console.WriteLine("Balance : " + balance);
+      Console.WriteLine("Balance : " + AccountDict[acc].balance );
     }
 
     public void withdraw()
@@ -95,11 +96,28 @@ namespace Practice1_2
             Console.WriteLine("Exceed the existing amount");
           }
           else {
-            Console.WriteLine("Final cost (+10%) = " + (int)(transfer * 1.1));
-            Console.WriteLine("Successfully withdraw");
-            balance -= (int)(transfer * 1.1);
-            historyList.Add((3, balance));
-            Console.WriteLine("Balance : " + balance);
+            Console.WriteLine("You have {0} point, do you want use 1 point to save handling fee?" +
+                              "\n\tPress 1 if tou want to use", points);
+            if (Console.ReadLine() == "1") {
+              Console.WriteLine("Final cost (+0%) = " + (int)(transfer * 1.1));
+              Console.WriteLine("Successfully withdraw");
+              var a = AccountDict[acc];
+              a.balance += transfer;
+              AccountDict[acc] = a;
+              balance -= transfer;
+              historyList.Add((3, balance));
+              Console.WriteLine("Balance : " + balance);
+            }
+            else {
+              Console.WriteLine("Final cost (+10%) = " + (int)(transfer * 1.1));
+              Console.WriteLine("Successfully withdraw");
+              var a = AccountDict[acc];
+              a.balance += transfer;
+              AccountDict[acc] = a;
+              balance -= (int)(transfer * 1.1);
+              historyList.Add((3, balance));
+              Console.WriteLine("Balance : " + balance);
+            }
           }
         }
       }
@@ -166,10 +184,13 @@ namespace Practice1_2
       }
     }
 
-    public void account_print()
+    public void account_print(int acc)
     {
       Console.WriteLine("Welcome to the backend system\n" +
                         "Below are the existing accounts and their balances");
+      var a = AccountDict[acc];
+      a.balance = balance;
+      AccountDict[acc] = a;
       foreach (var dict in AccountDict) {
         Console.WriteLine("Account : {0} - {1}", dict.Key, dict.Value.balance);
       }
@@ -194,7 +215,7 @@ namespace Practice1_2
             if (int.TryParse(Console.ReadLine(), out var option)) {
               switch (option) {
                 case 0:
-                  current_account.print_balance();
+                  current_account.print_balance(account_number);
                   break;
                 case 1:
                   current_account.withdraw();
@@ -212,7 +233,7 @@ namespace Practice1_2
                   current_account.history_print();
                   break;
                 case 65304:
-                  current_account.account_print();
+                  current_account.account_print(account_number);
                   break;
                 case 8:
                   return false;
