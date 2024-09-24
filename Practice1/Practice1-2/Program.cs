@@ -83,31 +83,51 @@ namespace Practice1_2
       
     }
 
-    public void transfer()
+    private void transfer_0(int acc)
+    {
+      Console.Write("Enter amount : ");
+      if (int.TryParse(Console.ReadLine(), out var transfer)) {
+        if (transfer > 100000 | transfer < 0) {
+          Console.WriteLine("Exceed the valid amount 0 ~ 100000");
+        }
+        else {
+          if (transfer > balance) {
+            Console.WriteLine("Exceed the existing amount");
+          }
+          else {
+            Console.WriteLine("Final cost (+10%) = " + (int)(transfer * 1.1));
+            Console.WriteLine("Successfully withdraw");
+            balance -= (int)(transfer * 1.1);
+            historyList.Add((3, balance));
+            Console.WriteLine("Balance : " + balance);
+          }
+        }
+      }
+      else
+        Console.WriteLine("Please enter a number");
+    }
+
+    public void transfer(int acc_num)
     {
       Console.Write("Enter transfer account : ");
       if (int.TryParse(Console.ReadLine(), out var account)) {
-        Console.Write("Enter amount : ");
-        if (int.TryParse(Console.ReadLine(), out var transfer)) {
-          if (transfer > 100000 | transfer < 0) {
-            Console.WriteLine("Exceed the valid amount 0 ~ 100000");
+        if (account.ToString().Length == 5) {
+          if (account == acc_num) {
+            Console.WriteLine("You can't transfer to yourself");
+          }
+          else if (AccountDict.ContainsKey(account)) {
+            
           }
           else {
-            if (transfer > balance) {
-              Console.WriteLine("Exceed the existing amount");
-            }
-            else {
+            Console.WriteLine("This is not a exist account, press 1 if you want to open one and keep going");
+            if (Console.ReadLine() == "1") {
+              transfer_0(account);
 
-              Console.WriteLine("Final cost (+10%) = " + (int)(transfer * 1.1));
-              Console.WriteLine("Successfully withdraw");
-              balance -= (int)(transfer * 1.1);
-              historyList.Add((3, balance));
-              Console.WriteLine("Balance : " + balance);
             }
           }
         }
-        else
-          Console.WriteLine("Please enter a number");
+        else 
+          Console.WriteLine("Account should be five digits");
       }
       else 
         Console.WriteLine("Account should be an integer");
@@ -183,7 +203,7 @@ namespace Practice1_2
                   current_account.deposit();
                   break;
                 case 3:
-                  current_account.transfer();
+                  current_account.transfer(account_number);
                   break;
                 case 4:
                   current_account.donate();
