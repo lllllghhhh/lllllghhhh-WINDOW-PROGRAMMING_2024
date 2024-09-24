@@ -17,67 +17,58 @@ namespace Practice1_1
 						break;
 					case 1:
 						Console.Write("Enter amount : ");
-						if (int.TryParse(Console.ReadLine(), out var withdraw)) {
-							if (withdraw > 100000 | withdraw < 0) {
-								Console.WriteLine("Exceed the valid amount 0 ~ 100000");
-							}
-							else {
-								if (withdraw > balance) {
-									Console.WriteLine("Exceed the existing amount");
-								}
-								else {
-									Console.WriteLine("Successfully withdraw");
-									balance -= withdraw;
-									Console.WriteLine("Balance : " + balance);
-								}
-							}
-						}
-						else 
+						if (!int.TryParse(Console.ReadLine(), out var withdraw)) {
 							Console.WriteLine("Please enter a number");
+							break;
+						}
+						if (withdraw > 100000 || withdraw < 0) {
+							Console.WriteLine("Exceed the valid amount 0 ~ 100000");
+							break;
+						}
+						if (withdraw > balance) {
+							Console.WriteLine("Exceed the existing amount");
+							break;
+						}
+						Console.WriteLine("Successfully withdraw");
+						balance -= withdraw;
+						Console.WriteLine("Balance : " + balance);
 						break;
 					case 2:
 						Console.Write("Enter amount : ");
-						if (int.TryParse(Console.ReadLine(), out var deposit)) {
-							if (deposit > 100000 | deposit < 0) {
-								Console.WriteLine("Exceed the valid amount 0 ~ 100000");
-							}
-							else {
-								Console.WriteLine("Successfully withdraw");
-								balance += deposit;
-								Console.WriteLine("Balance : " + balance);
-							}
-						}
-						else
+						if (!int.TryParse(Console.ReadLine(), out var deposit)) {
 							Console.WriteLine("Please enter a number");
+							break;
+						}
+						if (deposit > 100000 || deposit < 0) {
+							Console.WriteLine("Exceed the valid amount 0 ~ 100000");
+							break;
+						}
+						Console.WriteLine("Successfully withdraw");
+						balance += deposit;
+						Console.WriteLine("Balance : " + balance);
 						break;
 					case 3:
 						Console.Write("Enter transfer account : ");
-						if (int.TryParse(Console.ReadLine(), out var account)) {
-							Console.Write("Enter amount : ");
-							if (int.TryParse(Console.ReadLine(), out var transfer)) {
-								if (transfer > 100000 | transfer < 0) {
-									Console.WriteLine("Exceed the valid amount 0 ~ 100000");
-								}
-								else {
-									if (transfer > balance) {
-										Console.WriteLine("Exceed the existing amount");
-									}
-									else {
-
-										Console.WriteLine("Final cost (+10%) = " + (int)(transfer * 1.1));
-										Console.WriteLine("Successfully withdraw");
-										balance -= (int)(transfer * 1.1);
-										Console.WriteLine("Balance : " + balance);
-									}
-								}
-							}
-							else
-								Console.WriteLine("Please enter a number");
-						}
-						else 
+						if (!int.TryParse(Console.ReadLine(), out var account)) {
 							Console.WriteLine("Account should be an integer");
-						
-
+							break;
+						}
+						Console.Write("Enter amount : ");
+						if (!int.TryParse(Console.ReadLine(), out var transfer)) {
+							Console.WriteLine("Please enter a number"); 
+						}
+						if (transfer > 100000 || transfer < 0) {
+							Console.WriteLine("Exceed the valid amount 0 ~ 100000");
+							break;
+						}
+						if ((int)(transfer * 1.1) > balance) {
+							Console.WriteLine("Exceed the existing amount");
+							break;
+						}
+						Console.WriteLine("Final cost (+10%) = " + (int)(transfer * 1.1));
+						Console.WriteLine("Successfully withdraw");
+						balance -= (int)(transfer * 1.1);
+						Console.WriteLine("Balance : " + balance);
 						break;
 					case 8:
 						return false;
