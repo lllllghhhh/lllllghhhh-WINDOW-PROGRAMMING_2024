@@ -27,18 +27,16 @@ namespace Practice1_2
       {19000, new account(10000,0) },
     };
 
-    static private List<(int, int)> historyList = new List<(int, int)>
-    {
-      
-    };
+    static private List<(int, int)> historyList = new List<(int, int)> { };
 
     public void add_account(int n)
     {
-      AccountDict.Add(n, new account(0,0));
+      AccountDict.Add(n, new account(10000,0));
     }
-    public void print_balance()
+    public void print_balance(int n)
     {
-      Console.WriteLine("Balance : " + balance);
+      if(AccountDict.TryGetValue(n, out var _account))
+      Console.WriteLine("Balance : " + _account.balance);
     }
 
     public void withdraw()
@@ -54,7 +52,7 @@ namespace Practice1_2
           }
           else {
             Console.WriteLine("Successfully withdraw");
-            balance -= withdraw ;
+            this.balance -= withdraw ;
             historyList.Add((1,balance));
             Console.WriteLine("Balance : " + balance);
           }
@@ -72,7 +70,6 @@ namespace Practice1_2
           Console.WriteLine("Exceed the valid amount 0 ~ 100000");
         }
         else {
-          Console.WriteLine("Successfully withdraw");
           balance += deposit;
           historyList.Add((2, balance));
           Console.WriteLine("Balance : " + balance);
@@ -95,11 +92,22 @@ namespace Practice1_2
             Console.WriteLine("Exceed the existing amount");
           }
           else {
-            Console.WriteLine("Final cost (+10%) = " + (int)(transfer * 1.1));
-            Console.WriteLine("Successfully withdraw");
-            balance -= (int)(transfer * 1.1);
-            historyList.Add((3, balance));
-            Console.WriteLine("Balance : " + balance);
+            Console.WriteLine("You have {0} point, do you want use 1 point to save handling fee?" +
+                              "\n\tPress 1 if tou want to use", points);
+            if (Console.ReadLine() == "1") {
+              Console.WriteLine("Final cost (+0%) = " + (int)(transfer * 1.1));
+              Console.WriteLine("Successfully withdraw");
+              balance -= transfer;
+              historyList.Add((3, balance));
+              Console.WriteLine("Balance : " + balance);
+            }
+            else {
+              Console.WriteLine("Final cost (+10%) = " + (int)(transfer * 1.1));
+              Console.WriteLine("Successfully withdraw");
+              balance -= (int)(transfer * 1.1);
+              historyList.Add((3, balance));
+              Console.WriteLine("Balance : " + balance);
+            }
           }
         }
       }
@@ -116,13 +124,13 @@ namespace Practice1_2
             Console.WriteLine("You can't transfer to yourself");
           }
           else if (AccountDict.ContainsKey(account)) {
-            
+            transfer_0(account);
           }
           else {
             Console.WriteLine("This is not a exist account, press 1 if you want to open one and keep going");
             if (Console.ReadLine() == "1") {
+              AccountDict.Add(account,new account());
               transfer_0(account);
-
             }
           }
         }
@@ -166,7 +174,7 @@ namespace Practice1_2
       }
     }
 
-    public void account_print()
+    public void account_print(int acc)
     {
       Console.WriteLine("Welcome to the backend system\n" +
                         "Below are the existing accounts and their balances");
@@ -194,7 +202,7 @@ namespace Practice1_2
             if (int.TryParse(Console.ReadLine(), out var option)) {
               switch (option) {
                 case 0:
-                  current_account.print_balance();
+                  current_account.print_balance(account_number);
                   break;
                 case 1:
                   current_account.withdraw();
@@ -212,7 +220,7 @@ namespace Practice1_2
                   current_account.history_print();
                   break;
                 case 65304:
-                  current_account.account_print();
+                  current_account.account_print(account_number);
                   break;
                 case 8:
                   return false;
