@@ -7,27 +7,34 @@ namespace Practice1_2
   struct account
   {
     private int balance;
-    account(int bal)
+    private int points;
+    account(int bal, int poi)
     {
       balance = bal;
+      points = poi;
     }
     static private Dictionary<int, account> AccountDict = new Dictionary<int, account>
     {
-      {10000, new account(10000) },
-      {11000, new account(10000) },
-      {12000, new account(10000) },
-      {13000, new account(10000) },
-      {14000, new account(10000) },
-      {15000, new account(10000) },
-      {16000, new account(10000) },
-      {17000, new account(10000) },
-      {18000, new account(10000) },
-      {19000, new account(10000) },
+      {10000, new account(10000,0) },
+      {11000, new account(10000,0) },
+      {12000, new account(10000,0) },
+      {13000, new account(10000,0) },
+      {14000, new account(10000,0) },
+      {15000, new account(10000,0) },
+      {16000, new account(10000,0) },
+      {17000, new account(10000,0) },
+      {18000, new account(10000,0) },
+      {19000, new account(10000,0) },
+    };
+
+    static private List<(int, int)> historyList = new List<(int, int)>
+    {
+      
     };
 
     public void add_account(int n)
     {
-      AccountDict.Add(n, new account(0));
+      AccountDict.Add(n, new account(0,0));
     }
     public void print_balance()
     {
@@ -48,6 +55,7 @@ namespace Practice1_2
           else {
             Console.WriteLine("Successfully withdraw");
             balance -= withdraw ;
+            historyList.Add((1,balance));
             Console.WriteLine("Balance : " + balance);
           }
         }
@@ -66,6 +74,7 @@ namespace Practice1_2
         else {
           Console.WriteLine("Successfully withdraw");
           balance += deposit;
+          historyList.Add((2, balance));
           Console.WriteLine("Balance : " + balance);
         }
       }
@@ -92,6 +101,7 @@ namespace Practice1_2
               Console.WriteLine("Final cost (+10%) = " + (int)(transfer * 1.1));
               Console.WriteLine("Successfully withdraw");
               balance -= (int)(transfer * 1.1);
+              historyList.Add((3, balance));
               Console.WriteLine("Balance : " + balance);
             }
           }
@@ -101,6 +111,48 @@ namespace Practice1_2
       }
       else 
         Console.WriteLine("Account should be an integer");
+    }
+
+    public void donate()
+    {
+      Console.Write("Enter amount : ");
+      if (int.TryParse(Console.ReadLine(), out var donate)) {
+        if (donate > 100000 | donate < 0) {
+          Console.WriteLine("Exceed the valid amount 0 ~ 100000");
+        }
+        else {
+          if (donate > balance) {
+            Console.WriteLine("Exceed the existing amount");
+          }
+          else {
+            Console.WriteLine("Successfully withdraw");
+            balance -= donate;
+            points += donate / 1000;
+            historyList.Add((4, balance));
+            Console.WriteLine("Balance : " + balance);
+          }
+        }
+      }
+      else
+        Console.WriteLine("Please enter a number");
+
+    }
+
+    public void history_print()
+    {
+      Console.WriteLine("transaction history");
+      foreach (var entry in historyList) {
+        Console.WriteLine("{0} - {1}", entry.Item1,entry.Item2);
+      }
+    }
+
+    public void account_print()
+    {
+      Console.WriteLine("Welcome to the backend system\n" +
+                        "Below are the existing accounts and their balances");
+      foreach (var dict in AccountDict) {
+        Console.WriteLine("Account : {0} - {1}", dict.Key, dict.Value.balance);
+      }
     }
     
   }
@@ -117,7 +169,8 @@ namespace Practice1_2
           current_account.add_account(account_number);
           while (true) {
             Console.WriteLine(
-              "What do you want to do?\n(0)Check balance\n(1)Withdraw money\n(2)Deposit money\n(3)Transfer money\n(8) Exit");
+              "What do you want to do?\n\t\t(0)Check balance\n(1)Withdraw money\n(2)Deposit money\n" +
+              "(3)Transfer money\n(4)Donate\n(5)History\n(8) Exit");
             if (int.TryParse(Console.ReadLine(), out var option)) {
               switch (option) {
                 case 0:
@@ -131,6 +184,15 @@ namespace Practice1_2
                   break;
                 case 3:
                   current_account.transfer();
+                  break;
+                case 4:
+                  current_account.donate();
+                  break;
+                case 5:
+                  current_account.history_print();
+                  break;
+                case 65304:
+                  current_account.account_print();
                   break;
                 case 8:
                   return false;
