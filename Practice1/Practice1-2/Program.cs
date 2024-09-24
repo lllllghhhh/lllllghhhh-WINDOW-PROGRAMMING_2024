@@ -169,8 +169,8 @@ namespace Practice1_2
           current_account.add_account(account_number);
           while (true) {
             Console.WriteLine(
-              "What do you want to do?\n\t\t(0)Check balance\n(1)Withdraw money\n(2)Deposit money\n" +
-              "(3)Transfer money\n(4)Donate\n(5)History\n(8) Exit");
+              "What do you want to do?\n\t(0)Check balance\n\t(1)Withdraw money\n\t(2)Deposit money\n\t" +
+              "(3)Transfer money\n\t(4)Donate\n\t(5)History\n\t(8) Exit");
             if (int.TryParse(Console.ReadLine(), out var option)) {
               switch (option) {
                 case 0:

@@ -8,7 +8,8 @@ namespace Practice1_1
 		static bool ATM()
 		{
 			Console.WriteLine(
-				"What do you want to do?\n(0)Check balance\n(1)Withdraw money\n(2)Deposit money\n(3)Transfer money\n(8) Exit");
+				"What do you want to do?\n\t(0)Check balance\n\t(1)Withdraw money\n\t" +
+				"(2)Deposit money\n\t(3)Transfer money\n\t(8) Exit");
 			if (int.TryParse(Console.ReadLine(), out var option)) {
 				switch (option) {
 					case 0:
