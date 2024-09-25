@@ -43,7 +43,6 @@ namespace Practice1_1
 							Console.WriteLine("Exceed the valid amount 0 ~ 100000");
 							break;
 						}
-						Console.WriteLine("Successfully withdraw");
 						balance += deposit;
 						Console.WriteLine("Balance : " + balance);
 						break;
