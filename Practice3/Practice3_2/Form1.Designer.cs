@@ -33,7 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.account = new System.Windows.Forms.TextBox();
-            this.password = new System.Windows.Forms.MaskedTextBox();
+            this.password = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -51,7 +51,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.createacc_btn = new System.Windows.Forms.Button();
-            this.newpassword = new System.Windows.Forms.MaskedTextBox();
+            this.newpassword = new System.Windows.Forms.TextBox();
             this.newacc = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -111,7 +111,6 @@
             // 
             this.password.Location = new System.Drawing.Point(110, 106);
             this.password.Name = "password";
-            this.password.PasswordChar = '$';
             this.password.Size = new System.Drawing.Size(415, 29);
             this.password.TabIndex = 5;
             // 
@@ -301,7 +300,6 @@
             // 
             this.newpassword.Location = new System.Drawing.Point(110, 106);
             this.newpassword.Name = "newpassword";
-            this.newpassword.PasswordChar = '$';
             this.newpassword.Size = new System.Drawing.Size(415, 29);
             this.newpassword.TabIndex = 5;
             // 
@@ -360,7 +358,7 @@
         private System.Windows.Forms.TextBox notice;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.MaskedTextBox password;
+        private System.Windows.Forms.TextBox password;
         private System.Windows.Forms.TextBox account;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
@@ -380,7 +378,7 @@
         private System.Windows.Forms.Button new_account;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button createacc_btn;
-        private System.Windows.Forms.MaskedTextBox newpassword;
+        private System.Windows.Forms.TextBox newpassword;
         private System.Windows.Forms.TextBox newacc;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
