@@ -30,6 +30,7 @@ namespace practice3_1
             notice.Text = "歡迎光臨! 請登入!";
             button1.Hide();
             panel2.Show();
+            account.Focus();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -50,7 +51,14 @@ namespace practice3_1
 
         private void button8_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(quantityField.Text, out var quantity))
+            if (monster == null)
+            {
+                notice.Text = "請選擇商品";
+                quantityField.Focus();
+                return;
+            }
+
+            if (!int.TryParse(quantityField.Text, out var quantity) || quantity < 1)
             {
                 notice.Text = "商品數量必須是正整數";
                 quantityField.Focus();
@@ -64,8 +72,7 @@ namespace practice3_1
         private void Item_Click(object sender, EventArgs e)
         {
             foreach (var btn in options) {
-                if (btn == sender)
-                    monster = (string)btn.Tag;
+                monster = (string)((Button)sender).Tag;
             }
 
         }
@@ -73,6 +80,7 @@ namespace practice3_1
 
         private void NewOrder_Click(object sender, EventArgs e)
         {
+            monster = null;
             notice.Text = "輸入完數量後，點選對應的商品按鈕，並按送出";
             orderListView.Clear();
             panel1.Hide();
