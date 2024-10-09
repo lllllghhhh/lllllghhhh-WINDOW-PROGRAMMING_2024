@@ -73,7 +73,7 @@ namespace practice3_2
             
    
             
-            if (!int.TryParse(quantityField.Text, out var quantity))
+            if (!int.TryParse(quantityField.Text, out var quantity) || quantity < 1)
             {
                 notice.Text = "商品數量必須是正整數";
                 quantityField.Focus();
@@ -82,9 +82,11 @@ namespace practice3_2
 
             notice.Text = $"新增訂單成功，訂單編號{i}";
             item_list.Add((i++, monster, quantity, user));
-            penguinBtn.Text = (string)penguinBtn.Tag;
-            porkBtn.Text = (string)porkBtn.Tag;
-            shrimpBtn.Text = (string)shrimpBtn.Tag;
+            foreach (var btn in options)
+            {
+                btn.Text = (string)btn.Tag;
+            }
+           
             quantityField.Focus();
             panel3.Hide();
             panel1.Show();
@@ -93,8 +95,8 @@ namespace practice3_2
         {
             foreach (var btn in options){
                 btn.Text = btn == sender ? $"{(string)btn.Tag}(已選擇)" : (string)btn.Tag;
-                if (btn == sender)
-                    monster =(string) btn.Tag;
+                monster = (string)((Button)sender).Tag;
+                
             }
                 
         }
@@ -102,6 +104,7 @@ namespace practice3_2
 
         private void NewOrder_Click(object sender, EventArgs e)
         {
+            monster = null;
             orderListView.Clear();
             notice.Text = "輸入完數量後，點選對應的商品按鈕，並按送出";
             panel1.Hide();
@@ -123,12 +126,19 @@ namespace practice3_2
             notice.Text = "請輸入要新增的使用者帳號與名稱";
             panel1.Hide();
             panel4.Show();
+            orderListView.Clear();
            
    
         }
 
         private void createacc_btn_Click(object sender, EventArgs e)
         {
+           if(newacc.Text == "" || newpassword.Text == "")
+            {
+                notice.Text = "請輸入帳號或密碼";
+                return;
+            }
+
             if (acc_list.TryGetValue(newacc.Text, out var acc))
             {
                 notice.Text = "此使用者已經存在";
@@ -149,6 +159,7 @@ namespace practice3_2
             panel1.Hide();
             panel2.Show();
             notice.Text = "歡迎光臨! 請登入!";
+            orderListView.Clear();
 
         }
     }
